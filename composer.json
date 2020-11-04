@@ -1,0 +1,39 @@
+{
+    "autoload": {
+        "psr-4" :{
+            "Pdsinterop\\Solid\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "./bin",
+        "platform": {
+            "php": "7.3.11",
+            "ext-dom": "0.0.0",
+            "ext-mbstring": "0.0.0"
+        },
+        "sort-packages": true
+    },
+    "description": "Standalone Solid PubSub Server written in PHP by PDS Interop.",
+    "license": "MIT",
+    "name": "pdsinterop/solid-pubsub-server",
+    "require": {
+        "php": "~7.1",
+        "cboden/ratchet": "^0.4",
+        "textalk/websocket": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "scripts": {
+        "lint":"",
+        "serve-dev":"USER=alice PASSWORD=alice123 ENVIRONMENT=development php -S \"${HOST:-localhost}:${PORT:-8080}\" -t web/ web/index.php",
+        "serve-dev-docker":"bash ./bin/serve-docker-dev.sh",
+        "test":"phpunit"
+    },
+    "scripts-descriptions": {
+      "serve-dev": "Run the application with the internal PHP development server",
+      "serve-dev-docker": "Run the application with the docker image provided by the TestSuite repo.",
+      "test": "Run unit-test with PHPUnit"
+    },
+    "type": "project"
+}
