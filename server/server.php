@@ -6,10 +6,11 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use Ratchet\MessageComponentInterface;
+use Ratchet\WebSocket\WsServerInterface;
 use Ratchet\ConnectionInterface;
 require dirname(dirname( __FILE__ )) . '/vendor/autoload.php';
 
-class Socket implements MessageComponentInterface {
+class Socket implements MessageComponentInterface, WsServerInterface {
 
     public function __construct()
     {
