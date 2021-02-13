@@ -15,9 +15,13 @@ class Socket implements MessageComponentInterface {
     {
         $this->clients = new \SplObjectStorage;
 		$this->subscriptions = array();
+		$this->subprotocols = array("solid-0.1");
     }
 
-    public function onOpen(ConnectionInterface $conn) {
+	public function getSubProtocols() {
+		return $this->subprotocols;
+	}
+	public function onOpen(ConnectionInterface $conn) {
 
         // Store the new connection in $this->clients
         $this->clients->attach($conn);
