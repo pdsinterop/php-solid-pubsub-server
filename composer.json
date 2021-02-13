@@ -18,8 +18,8 @@
     "name": "pdsinterop/solid-pubsub-server",
     "require": {
         "php": "~7.1",
-        "cboden/ratchet": "^0.4",
-        "textalk/websocket": "^1.4"
+        "cboden/ratchet": "0.4.3",
+        "textalk/websocket": "1.4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
