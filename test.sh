@@ -1,5 +1,6 @@
 docker network create testnet
 docker run -d -v `pwd`:/app --network=testnet --name=pubsub --rm pubsub
+
 # docker exec -it pubsub php /install/composer.phar install --no-dev --prefer-dist
 # docker exec -it pubsub /bin/bash
 docker exec -it pubsub php server/serverWh2Ws.php

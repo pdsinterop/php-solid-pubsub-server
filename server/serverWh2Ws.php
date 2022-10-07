@@ -11,9 +11,10 @@ use Ratchet\WebSocket\WsServer;
 use Ratchet\MessageComponentInterface;
 use Ratchet\WebSocket\WsServerInterface;
 use Ratchet\ConnectionInterface;
-use React\Socket\Server as Reactor;
 
 require dirname(dirname( __FILE__ )) . '/vendor/autoload.php';
+
+require './server/serverReact.php';
 
 class Socket implements MessageComponentInterface, WsServerInterface {
 	public function __construct() {
@@ -104,8 +105,8 @@ $server = IoServer::factory(
 	SOCKET_PORT
 );
 
-$socket = new Reactor($server->loop);
-$socket->listen(8082, '0.0.0.0'); //Port 2
-$socket->on('connection', [$server, 'handleConnect']);
-
+echo "run 1";
+runWebHookServer();
+echo "run 2";
 $server->run();
+echo "run 3";
