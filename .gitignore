@@ -1,4 +1,5 @@
 # Directories to ignore
+/bin
 /build
 /vendor
 

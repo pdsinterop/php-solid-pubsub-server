@@ -2,7 +2,8 @@ FROM php:7.2
 RUN apt-get update && \
     apt-get install -y \
         git \
-        zlib1g-dev 
+        zlib1g-dev \
+        zip
 WORKDIR /tls
 WORKDIR /install
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -12,4 +13,4 @@ ADD . /app
 WORKDIR /app
 RUN php /install/composer.phar install --no-dev --prefer-dist
 EXPOSE 8080
-CMD php server/server.php
+CMD php server/serverWps.php
