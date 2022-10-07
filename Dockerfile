@@ -12,4 +12,4 @@ ADD . /app
 WORKDIR /app
 RUN php /install/composer.phar install --no-dev --prefer-dist
 EXPOSE 8080
-CMD php server/server.php
+CMD php server/serverWps.php

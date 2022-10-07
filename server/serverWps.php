@@ -1,4 +1,8 @@
 <?php
+// "WPS" stands for WebSockets PubSub and can be used
+// in combination with e.g. https://github.com/pdsinterop/solid-nextcloud
+// or https://github.com/pdsinterop/php-solid-server for
+// https://github.com/solid/solid-spec/blob/077e39c/api-websockets.md
 
 define("SOCKET_PORT", 8080);
 
