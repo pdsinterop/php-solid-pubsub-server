@@ -14,7 +14,7 @@ use Ratchet\ConnectionInterface;
 
 require dirname(dirname( __FILE__ )) . '/vendor/autoload.php';
 
-require './server/serverReact.php';
+require './server/webhookServer.php';
 
 class Socket implements MessageComponentInterface, WsServerInterface {
 	public function __construct() {
@@ -30,46 +30,25 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 		// Store the new connection in $this->clients
 		$this->clients->attach($conn);
 		echo "New connection! ({$conn->resourceId})\n";
+		$body = "bar";
+		echo "Client sub for $body\n";
+		if (!isset($this->subscriptions[$body])) {
+			$this->subscriptions[$body] = array();
+		}
+		$this->subscriptions[$body][] = $conn;
+		$conn->send("ack $body");
+	}
+
+	public function sendUpdate($msg, $token) {
+		if (isset($this->subscriptions[$token])) {
+			foreach ( $this->subscriptions[$token] as $client ) {
+				$client->send($msg);
+			}
+		}
 	}
 
 	public function onMessage(ConnectionInterface $from, $message) {
-		$messageInfo = explode(" ", $message);
-		$command = $messageInfo[0];
-		$body = trim($messageInfo[1]);
-		
-		switch ($command) {
-			case "auth":
-			case "dpop":
-				// FIXME: we should check that the client is allowed to listen
-			break;
-			case "sub":
-				echo "Client sub for $body\n";
-				if (!isset($this->subscriptions[$body])) {
-					$this->subscriptions[$body] = array();
-				}
-				$this->subscriptions[$body][] = $from;
-				$from->send("ack $body");
-			break;
-			case "pub":
-				echo "Client pub for $body\n";
-				if (isset($this->subscriptions[$body])) {
-					foreach ( $this->subscriptions[$body] as $client ) {
-						$client->send("pub $body");
-					}
-				}
-			break;
-			default:
-				echo "Client $from->resourceId said $message\n";
-				foreach ( $this->clients as $client ) {
-
-					if ( $from->resourceId == $client->resourceId ) {
-						continue;
-					}
-
-					$client->send("Client $from->resourceId said $message\n");
-				}
-			break;
-		}
+		echo "Client $from->resourceId said $message, ignoring\n";
 	}
 
 	public function onClose(ConnectionInterface $conn) {
@@ -96,17 +75,19 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 	}
 }
 
+$socket = new Socket();
 $server = IoServer::factory(
 	new HttpServer(
 		new WsServer(
-			new Socket()
+			$socket
 		)
 	),
 	SOCKET_PORT
 );
 
 echo "run 1";
-runWebHookServer();
+$wh = new WebHookServer($socket);
+$wh->listen();
 echo "run 2";
 $server->run();
 echo "run 3";
