@@ -27,16 +27,18 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 		return $this->subprotocols;
 	}
 	public function onOpen(ConnectionInterface $conn) {
+		$token = substr($conn->httpRequest->getUri()->getPath(), 1);
+
 		// Store the new connection in $this->clients
 		$this->clients->attach($conn);
 		echo "New connection! ({$conn->resourceId})\n";
-		$body = "bar";
-		echo "Client sub for $body\n";
-		if (!isset($this->subscriptions[$body])) {
-			$this->subscriptions[$body] = array();
+
+		echo "Client sub for $token\n";
+		if (!isset($this->subscriptions[$token])) {
+			$this->subscriptions[$token] = array();
 		}
-		$this->subscriptions[$body][] = $conn;
-		$conn->send("ack $body");
+		$this->subscriptions[$token][] = $conn;
+		// $conn->send("ack $token");
 	}
 
 	public function sendUpdate($msg, $token) {
