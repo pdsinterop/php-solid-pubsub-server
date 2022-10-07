@@ -11,13 +11,18 @@ class WebHookServer {
 	}
 	public function listen() {
 		$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) {
-			$this->socket->sendUpdate("foo", "bar");
+      $url = $request->getRequestTarget();
+      $firstQuestionMarkPos = strpos($url, "?");
+      $channel = substr($url, 1, $firstQuestionMarkPos - 1);
+      $data = urldecode(substr($url, $firstQuestionMarkPos + 1));
+      var_dump($url, $channel, $data);
+			$this->socket->sendUpdate($data, $channel);
 			return React\Http\Message\Response::plaintext(
 				"Hello World!\n"
 			);
 		}
 	);
-		$host = '0.0.0.0:8080';
+		$host = '0.0.0.0:8082';
 		$socket = new React\Socket\SocketServer($host);
 		$http->listen($socket);
 	}
