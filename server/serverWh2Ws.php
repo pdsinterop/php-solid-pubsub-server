@@ -2,9 +2,9 @@
 // "WH2WS" stands for WebHooks-to-WebSockets and can be used
 // in combination with e.g. https://github.com/pdsinterop/solid-nextcloud
 // for https://solidproject.org/TR/2022/websocket-subscription-2021-20220509
-
+	
 define("SOCKET_PORT", 8081);
-
+	
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
@@ -14,25 +14,22 @@ use Ratchet\ConnectionInterface;
 require dirname(dirname( __FILE__ )) . '/vendor/autoload.php';
 
 class Socket implements MessageComponentInterface, WsServerInterface {
-
-    public function __construct()
-    {
-        $this->clients = new \SplObjectStorage;
+	public function __construct() {
+		$this->clients = new \SplObjectStorage;
 		$this->subscriptions = array();
 		$this->subprotocols = array("solid-0.1");
-    }
+	}
 
 	public function getSubProtocols() {
 		return $this->subprotocols;
 	}
 	public function onOpen(ConnectionInterface $conn) {
+		// Store the new connection in $this->clients
+		$this->clients->attach($conn);
+		echo "New connection! ({$conn->resourceId})\n";
+	}
 
-        // Store the new connection in $this->clients
-        $this->clients->attach($conn);
-        echo "New connection! ({$conn->resourceId})\n";
-    }
-
-    public function onMessage(ConnectionInterface $from, $message) {
+	public function onMessage(ConnectionInterface $from, $message) {
 		$messageInfo = explode(" ", $message);
 		$command = $messageInfo[0];
 		$body = trim($messageInfo[1]);
@@ -70,9 +67,9 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 				}
 			break;
 		}
-    }
+	}
 
-    public function onClose(ConnectionInterface $conn) {
+	public function onClose(ConnectionInterface $conn) {
 		echo "Client $conn->resourceId left\n";
 		foreach ($this->subscriptions as $url => $subscribers) {
 			foreach ($subscribers as $key => $client) {
@@ -82,9 +79,9 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 				}
 			}
 		}
-    }
+	}
 
-    public function onError(ConnectionInterface $conn, \Exception $e) {
+	public function onError(ConnectionInterface $conn, \Exception $e) {
 		foreach ($this->subscriptions as $url => $subscribers) {
 			foreach ($subscribers as $key => $client) {
 				if ($client->resourceId == $conn->resourceId) {
@@ -93,15 +90,15 @@ class Socket implements MessageComponentInterface, WsServerInterface {
 				}
 			}
 		}
-    }
+	}
 }
 
 $server = IoServer::factory(
-    new HttpServer(
-        new WsServer(
-            new Socket()
-        )
-    ),
+	new HttpServer(
+		new WsServer(
+			new Socket()
+		)
+	),
 	SOCKET_PORT
 );
 
