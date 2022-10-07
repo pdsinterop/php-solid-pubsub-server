@@ -12,9 +12,8 @@ class WebHookServer {
 	public function listen() {
 		$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) {
       $url = $request->getRequestTarget();
-      $firstQuestionMarkPos = strpos($url, "?");
-      $channel = substr($url, 1, $firstQuestionMarkPos - 1);
-      $data = urldecode(substr($url, $firstQuestionMarkPos + 1));
+      $channel = substr($url, 1);
+      $data = $request->getBody()->__toString();
       var_dump($url, $channel, $data);
 			$this->socket->sendUpdate($data, $channel);
 			return React\Http\Message\Response::plaintext(

@@ -11,4 +11,4 @@ docker exec -it tester /bin/bash
 #  wscat -c ws://pubsub:8081
 
 # docker exec -it tester wscat -c ws://pubsub:8081 -s "solid-0.1"
-# docker exec -it tester curl -i "http://pubsub:8082/bar?\{\"a\":\"b://sx/a/vr?4>\"\}"
+# docker exec -it tester curl -d "\{\"a\":\"b://sx/a/vr?4>\"\}" http://pubsub:8082/bar
