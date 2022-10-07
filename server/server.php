@@ -7,8 +7,8 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 require dirname(dirname( __FILE__ )) . '/vendor/autoload.php';
-require 'SocketWps';
-require 'SocketWh2Ws';
+require 'SocketWps.php';
+require 'SocketWh2Ws.php';
 
 $serverWps = IoServer::factory(
     new HttpServer(
