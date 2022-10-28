@@ -1,3 +1,11 @@
-Dockerfile
-run-solid-test-suite.sh
+# Directories to ignore
 .git
+
+# Files to ignore
+.gitignore
+_config.yml
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+Dockerfile
+Gemfile
