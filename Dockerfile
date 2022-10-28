@@ -1,15 +1,18 @@
 FROM php:7.2
-RUN apt-get update && \
-    apt-get install -y \
+
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends \
         git \
-        zlib1g-dev 
-WORKDIR /tls
-WORKDIR /install
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
-ADD . /app
+        zip \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /app
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+RUN composer install --working-dir=/app --no-dev --prefer-dist \
+    && rm  /usr/local/bin/composer
+
 WORKDIR /app
-RUN php /install/composer.phar install --no-dev --prefer-dist
 EXPOSE 8080
-CMD php server/server.php
+CMD ["php", "server/server.php"]
