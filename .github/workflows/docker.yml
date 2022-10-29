@@ -1,0 +1,26 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker-build-pub-sub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Pub-Sub Docker image
+        run: |
+          docker build -t "ghcr.io/pdsinterop/php-solid-pubsub-server:latest" .
+          docker push "ghcr.io/pdsinterop/php-solid-pubsub-server:latest"
