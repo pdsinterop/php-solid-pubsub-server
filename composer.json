@@ -7,7 +7,7 @@
     "config": {
         "bin-dir": "./bin",
         "platform": {
-            "php": "7.3.11",
+            "php": "8.3.16",
             "ext-dom": "0.0.0",
             "ext-mbstring": "0.0.0"
         },
@@ -17,9 +17,8 @@
     "license": "MIT",
     "name": "pdsinterop/solid-pubsub-server",
     "require": {
-        "php": "~7.1",
-        "cboden/ratchet": "~0.4.3",
-        "textalk/websocket": "~1.4.1"
+        "php": "~8.3",
+        "phrity/websocket": "^3.4"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
