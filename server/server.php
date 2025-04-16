@@ -148,11 +148,9 @@ class SolidPubSub {
             $server->setContext(['ssl' => [
                 'local_cert'        => 'certs/server.crt',
                 'local_pk'          => 'certs/server.key',
-//                'cafile'            => 'certs/CA/ca.crt',
                 'verify_peer'       => false, // if false, accept SSL handshake without client certificate
                 'verify_peer_name'  => false,
-                'allow_self_signed' => true,
-//                'capture_peer_cert' => false,
+                'allow_self_signed' => false,
             ]]);
 
             $server
