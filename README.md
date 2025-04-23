@@ -71,7 +71,7 @@ docker run                 \
    --rm                    \
    --volume "$PWD:/app"    \
    -it                     \
-   php:7.1                 \
+   php:8.3                 \
    php --docroot /app/web/ --server "localhost:${PORT}" /app/web/index.php
 ```
 Or on Mac:
@@ -84,7 +84,7 @@ docker run                 \
    --rm                    \
    --volume "$PWD:/app"    \
    -it                     \
-   php:7.1                 \
+   php:8.3                 \
    php --docroot /app/web/ --server "localhost:${PORT}" /app/web/index.php
 ```
 
