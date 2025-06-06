@@ -150,7 +150,7 @@ class SolidPubSub {
                 'local_pk'          => 'certs/server.key',
                 'verify_peer'       => false, // if false, accept SSL handshake without client certificate
                 'verify_peer_name'  => false,
-                'allow_self_signed' => false,
+                'allow_self_signed' => true,
             ]]);
 
             $server
