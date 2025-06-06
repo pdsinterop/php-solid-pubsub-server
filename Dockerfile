@@ -30,3 +30,5 @@ USER pubsubuser
 WORKDIR /app/server/
 EXPOSE 8080
 CMD ["php", "server.php"]
+
+LABEL org.opencontainers.image.source = "https://github.com/pdsinterop/php-solid-pubsub-server"
