@@ -21,6 +21,12 @@ RUN openssl genrsa -des3 -passout pass:x -out server.pass.key 2048 && \
   openssl req -new -key server.key -out server.csr -subj "/C=NL/ST=Overijssel/L=Enschede/O=PDSInterop/OU=PDSInterop/CN=solid.pdsinterop.org" && \
   openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt 
 
+# Create a custom user with UID 1234 and GID 1234
+RUN groupadd -g 1234 pubsubgroup && \
+    useradd -m -u 1234 -g pubsubgroup pubsubuser
+
+USER pubsubuser
+
 WORKDIR /app/server/
 EXPOSE 8080
 CMD ["php", "server.php"]
