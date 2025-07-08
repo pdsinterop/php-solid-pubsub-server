@@ -42,6 +42,7 @@ git clone git://github.com/pdsinterop/php-solid-pubsub-server.git \
     && cd php-solid-pubsub-server \
     && composer install --no-dev --prefer-dist
 ```
+
 At this point, the application is ready to run.
 
 ## Usage
@@ -74,7 +75,9 @@ docker run                 \
    php:8.3                 \
    php --docroot /app/web/ --server "localhost:${PORT}" /app/web/index.php
 ```
+
 Or on Mac:
+
 ```
 export PORT=8080 &&        \
 docker run                 \
@@ -88,12 +91,9 @@ docker run                 \
    php --docroot /app/web/ --server "localhost:${PORT}" /app/web/index.php
 ```
 
-
 ## Security
 
 If you discover any security related issues, please email <security@pdsinterop.org> instead of using the issue tracker.
-
--->
 
 ## Development
 
@@ -113,6 +113,7 @@ This project is structured as follows:
   ├── composer.json <- PHP package and dependency configuration
   └── README.md     <- You are now here
 -->
+
 ```
   .
   ├── src           <- Source code
@@ -164,7 +165,7 @@ All code created by PDS Interop is licensed under the [MIT License][license-link
 [contributors-page]:  https://github.com/pdsinterop/php-solid-pubsub-server/contributors
 [license-link]: ./LICENSE
 [license-shield]: https://img.shields.io/github/license/pdsinterop/php-solid-pubsub-server.svg
-[maintained-shield]: https://img.shields.io/maintenance/yes/2022
+[maintained-shield]: https://img.shields.io/maintenance/yes/2025
 [pdsinterop-shield]: https://img.shields.io/badge/-PDS%20Interop-gray.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii01IC01IDExMCAxMTAiIGZpbGw9IiNGRkYiIHN0cm9rZS13aWR0aD0iMCI+CiAgICA8cGF0aCBkPSJNLTEgNTJoMTdhMzcuNSAzNC41IDAgMDAyNS41IDMxLjE1di0xMy43NWEyMC43NSAyMSAwIDAxOC41LTQwLjI1IDIwLjc1IDIxIDAgMDE4LjUgNDAuMjV2MTMuNzVhMzcgMzQuNSAwIDAwMjUuNS0zMS4xNWgxN2EyMiAyMS4xNSAwIDAxLTEwMiAweiIvPgogICAgPHBhdGggZD0iTSAxMDEgNDhhMi43NyAyLjY3IDAgMDAtMTAyIDBoIDE3YTIuOTcgMi44IDAgMDE2OCAweiIvPgo8L3N2Zz4K
 [pdsinterop-site]: https://pdsinterop.org/
 [project-stage-badge: Development]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
