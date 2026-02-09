@@ -80,7 +80,11 @@ class SolidPubSub {
                 echo "Client pub for $body\n";
                 if (isset($this->subscriptions[$body])) {
                     foreach ( $this->subscriptions[$body] as $client ) {
-                        $client->send(new \WebSocket\Message\Text("pub $body"));
+                        try {
+                            $client->send(new \WebSocket\Message\Text("pub $body"));
+                        } catch (\Throwable $e) {
+                            echo "> ERROR SENDING: {$e->getMessage()}\n";
+                        }
                     }
                 }
             break;
@@ -90,7 +94,11 @@ class SolidPubSub {
                     if ( $connection->getRemoteName() == $client->getRemoteName() ) {
                         continue;
                     }
-                    $client->send(new \WebSocket\Message\Text("Client " . $connection->getRemoteName() . " said $message\n"));
+                    try {
+                        $client->send(new \WebSocket\Message\Text("Client " . $connection->getRemoteName() . " said $message\n"));
+                    } catch (\Throwable $e) {
+                        echo "> ERROR SENDING: {$e->getMessage()}\n";
+                    }
                 }
             break;
         }
@@ -134,6 +142,15 @@ class SolidPubSub {
     ) {
         $name = $connection ? "[{$connection->getRemoteName()}]" : "[-]";
         echo "> {$name} Error: {$exception->getMessage()}\n";
+        echo "Client " . $connection->getRemoteName() . " errored - disconnecting\n";
+        foreach ($this->subscriptions as $url => $subscribers) {
+            foreach ($subscribers as $key => $client) {
+                if ($client->getRemoteName() == $connection->getRemoteName()) {
+                    echo "Removing subscription for $url\n";
+                    unset($subscribers[$url][$key]);
+                }
+            }
+        }
     }
 
     public function createServer() {
