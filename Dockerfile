@@ -3,9 +3,10 @@ FROM php:8.3
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         git \
-        zip \
-        zlib1g-dev \
         openssl \
+        libzip-dev \
+        zlib1g-dev \
+    && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . /app
