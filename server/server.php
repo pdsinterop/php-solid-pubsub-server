@@ -228,6 +228,4 @@ class SolidPubSub {
     }
 }
 
-$startMemory = memory_get_usage();
-
 $server = new SolidPubSub($options);
