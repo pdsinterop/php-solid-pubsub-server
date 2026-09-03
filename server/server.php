@@ -118,6 +118,7 @@ class SolidPubSub {
                 }
             }
         }
+        unset($this->clients[$connection->getRemoteName()]);
     }
 
     public function onDisconnect(
@@ -133,6 +134,7 @@ class SolidPubSub {
                 }
             }
         }
+        unset($this->clients[$connection->getRemoteName()]);
     }
     
     public function onError(
@@ -151,6 +153,7 @@ class SolidPubSub {
                 }
             }
         }
+        unset($this->clients[$connection->getRemoteName()]);
     }
 
     public function createServer() {
@@ -224,5 +227,7 @@ class SolidPubSub {
         }
     }
 }
+
+$startMemory = memory_get_usage();
 
 $server = new SolidPubSub($options);
