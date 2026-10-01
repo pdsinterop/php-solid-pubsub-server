@@ -33,6 +33,7 @@ class SolidPubSub {
     private $options;
     private $clients;
     private $subscriptions;
+    private $server;
 
     public function __construct($options) {
         $this->options = $options;
