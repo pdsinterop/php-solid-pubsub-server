@@ -154,7 +154,7 @@ class SolidPubSub {
                 }
             }
         }
-        unset($this->clients[$connection->getRemoteName()]);
+        unset($this->clients[$name]);
     }
 
     public function createServer() {
