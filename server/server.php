@@ -143,12 +143,12 @@ class SolidPubSub {
         \WebSocket\Connection|null $connection,
         ExceptionInterface $exception
     ) {
-        $name = $connection ? "[{$connection->getRemoteName()}]" : "[-]";
-        echo "> {$name} Error: {$exception->getMessage()}\n";
-        echo "Client " . $connection->getRemoteName() . " errored - disconnecting\n";
+        $name = $connection ? "{$connection->getRemoteName()}" : "-";
+        echo "> [{$name}] Error: {$exception->getMessage()}\n";
+        echo "Client " . $name . " errored - disconnecting\n";
         foreach ($this->subscriptions as $url => $subscribers) {
             foreach ($subscribers as $key => $client) {
-                if ($client->getRemoteName() == $connection->getRemoteName()) {
+                if ($client->getRemoteName() == $name) {
                     echo "Removing subscription for $url\n";
                     unset($subscribers[$url][$key]);
                 }
