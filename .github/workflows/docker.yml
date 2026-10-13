@@ -8,6 +8,8 @@ on:
       - '*'
   pull_request:
     branches: [ main ]
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
 
 jobs:
   docker-build-pub-sub:
